@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "echo 'Web UI not yet implemented. See issue tracker for tasks.'",
     "build": "echo 'Web UI not yet implemented.'",
-    "lint": "echo 'No lint configured yet'",
+    "typecheck": "echo 'No typecheck configured yet'",
     "test": "echo 'No tests yet'"
   },
   "dependencies": {

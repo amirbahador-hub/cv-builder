@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# CodeRabbit configuration — AI code review for pull requests.
+# Free Pro tier for public open-source repos. Install the CodeRabbit GitHub App
+# on the repo to activate: https://github.com/apps/coderabbitai
+language: en-US
+
+reviews:
+  # "chill" keeps feedback focused on real issues — friendlier for the many
+  # first-time open-source contributors this project targets.
+  profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  poem: false
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+  # Don't waste review cycles on generated or vendored files.
+  path_filters:
+    - "!**/dist/**"
+    - "!**/.turbo/**"
+    - "!**/coverage/**"
+    - "!pnpm-lock.yaml"
+  # Project-specific conventions, taken from CONTRIBUTING.md.
+  path_instructions:
+    - path: "packages/core/src/rules/**"
+      instructions: >-
+        New or changed evaluation rules must cite a research source (recruiter
+        blog, hiring data, named expert). Flag any rule added without a source
+        reference. Each anti-pattern needs name, match, why, fix, and severity.
+    - path: "packages/core/src/archetypes/**"
+      instructions: >-
+        Each role archetype should have 15+ keywords, the full set of
+        evaluationWeights, action verbs, and anti-patterns. Weights should be
+        plausible (roughly sum to ~1.0). Flag archetypes missing any of these.
+    - path: "packages/**"
+      instructions: >-
+        Prefer readable code over clever code. No code that collects user data
+        or phones home. Keep the LLM-provider interface provider-agnostic.
+    - path: "**/*.test.ts"
+      instructions: >-
+        New features and bug fixes in packages/core require tests. Check that
+        behavior changes are covered.
+
+  tools:
+    biome:
+      enabled: true
+    actionlint:
+      enabled: true
+    gitleaks:
+      enabled: true
+
+chat:
+  auto_reply: true
