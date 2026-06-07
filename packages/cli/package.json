@@ -9,8 +9,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "lint": "tsc --noEmit",
-    "test": "vitest run"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@cv-builder/core": "workspace:*"

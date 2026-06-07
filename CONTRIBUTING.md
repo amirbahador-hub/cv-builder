@@ -53,20 +53,35 @@ Branch naming:
 
 ### 3. Make your changes
 
+We use a `Makefile` as the convenience entrypoint (run `make help` to list
+targets). Every target wraps the same pnpm scripts that CI runs, so
+`make ci` locally matches what GitHub Actions enforces on your PR.
+
 ```bash
 # Run the specific package you're working on
 pnpm --filter @cv-builder/core dev    # Watch mode for core
 pnpm --filter @cv-builder/cli dev     # Watch mode for CLI
 
-# Run tests
-pnpm test
-
-# Check formatting
-pnpm format:check
-
-# Fix formatting
-pnpm format
+make test          # Run tests
+make lint          # Lint + format check (Biome, read-only)
+make format        # Apply Biome formatting and safe fixes
+make typecheck     # Type-check all packages (tsc)
+make ci            # Everything CI runs: lint, typecheck, test, build
 ```
+
+### Linting & formatting
+
+Linting, formatting, and import sorting are handled by a single global
+[Biome](https://biomejs.dev) config (`biome.json`) — there is no ESLint or
+Prettier. Type checking stays on `tsc --noEmit` (Biome does not type-check).
+Run `make format` before committing; CI fails on any unformatted or
+lint-flagged code.
+
+### Automated review
+
+Pull requests are reviewed automatically by [CodeRabbit](https://coderabbit.ai)
+(`.coderabbit.yaml`) in addition to a human maintainer. Address or reply to its
+comments like any other review feedback.
 
 ### 4. Commit with clear messages
 
